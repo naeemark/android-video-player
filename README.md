@@ -1,4 +1,4 @@
-# Android Video Player (TIA) #
+# Android Video Player (ExoPlayer) #
 
 Native application for playing HLS videos
 
