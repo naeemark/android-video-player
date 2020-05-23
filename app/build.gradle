@@ -15,14 +15,42 @@ android {
         preDexLibraries = false
         javaMaxHeapSize "4g"
     }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/notice'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/rxjava.properties'
+        exclude 'META-INF/rxjava.PROPERTIES'
+        exclude 'META-INF/RXJAVA.properties'
+        exclude 'META-INF/RXJAVA.PROPERTIES'
+        exclude 'META-INF/rxjava'
+        exclude 'META-INF/RXJAVA'
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
+        debug {
+            debuggable true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        renameBuildFile()
+    }
+}
+
+def renameBuildFile() {
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            def newName = rootProject.name + "-${variant.name}-v${variant.versionName}-" + new Date().format('ddMMyy') + ".apk"
+            outputFileName = newName
         }
     }
 }
