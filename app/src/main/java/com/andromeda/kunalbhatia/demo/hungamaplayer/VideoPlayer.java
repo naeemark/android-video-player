@@ -1,5 +1,6 @@
 package com.andromeda.kunalbhatia.demo.hungamaplayer;
 
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,9 +10,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.MediaRouteButton;
-import android.support.v7.widget.PopupMenu;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.mediarouter.app.MediaRouteButton;
+import androidx.appcompat.widget.PopupMenu;
+
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -66,13 +69,13 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
     private Handler mainHandler;
     private HpLib_RendererBuilder hpLibRendererBuilder;
     private TrackRenderer videoRenderer;
-    private LinearLayout root,top_controls, middle_panel, unlock_panel, bottom_controls,seekBar_center_text,onlySeekbar;
+    private LinearLayout root, top_controls, middle_panel, unlock_panel, bottom_controls, seekBar_center_text, onlySeekbar;
     private double seekSpeed = 0;
     public static final int TYPE_VIDEO = 0;
     private View decorView;
     private int uiImmersiveOptions;
     private RelativeLayout loadingPanel;
-    private Runnable updatePlayer,hideControls;
+    private Runnable updatePlayer, hideControls;
 
     //Implementing the top bar
     private ImageButton btn_back;
@@ -87,7 +90,7 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
     private MediaItem mSelectedMedia;
 
     //Implementing current time, total time and seekbar
-    private TextView txt_ct,txt_td;
+    private TextView txt_ct, txt_td;
     private SeekBar seekBar;
     private PlayerControl playerControl;
 
@@ -95,9 +98,11 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
     public enum PlaybackState {
         PLAYING, PAUSED, BUFFERING, IDLE
     }
+
     public enum ControlsMode {
         LOCK, FULLCONTORLS
     }
+
     private ControlsMode controlsState;
 
     private ImageButton btn_play;
@@ -115,7 +120,7 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
     private Display display;
     private Point size;
 
-    private int sWidth,sHeight;
+    private int sWidth, sHeight;
     private float baseX, baseY;
     private long diffX, diffY;
     private int calculatedTime;
@@ -126,15 +131,16 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
     private static final int MIN_DISTANCE = 150;
     private ContentResolver cResolver;
     private Window window;
-    private LinearLayout volumeBarContainer, brightnessBarContainer,brightness_center_text, vol_center_text;
+    private LinearLayout volumeBarContainer, brightnessBarContainer, brightness_center_text, vol_center_text;
     private ProgressBar volumeBar, brightnessBar;
-    private TextView vol_perc_center_text, brigtness_perc_center_text,txt_seek_secs,txt_seek_currTime;
+    private TextView vol_perc_center_text, brigtness_perc_center_text, txt_seek_secs, txt_seek_currTime;
     private ImageView volIcon, brightnessIcon, vol_image, brightness_image;
-    private int brightness, mediavolume,device_height,device_width;
+    private int brightness, mediavolume, device_height, device_width;
     private AudioManager audioManager;
 
 
     private final SessionManagerListener<CastSession> mSessionManagerListener = new SessionManagerListenerImpl();
+
     private class SessionManagerListenerImpl implements SessionManagerListener<CastSession> {
         @Override
         public void onSessionStarting(CastSession session) {
@@ -181,10 +187,12 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
 
         }
     }
+
     private void onApplicationConnected(CastSession castSession) {
         mCastSession = castSession;
-        loadRemoteMedia(0,true);
+        loadRemoteMedia(0, true);
     }
+
     private MediaInfo buildMediaInfo() {
         MediaMetadata movieMetadata = new MediaMetadata(MediaMetadata.MEDIA_TYPE_MOVIE);
 
@@ -203,6 +211,7 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
                 .setStreamDuration(mSelectedMedia.getDuration() * 1000)
                 .build();
     }
+
     private void loadRemoteMedia(int position, boolean autoPlay) {
         if (mCastSession == null) {
             return;
@@ -215,9 +224,9 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
             @Override
             public void onStatusUpdated() {
                 Intent intent = new Intent(VideoPlayer.this, ExpandedControlsActivity.class);
-                startActivityForResult(intent,200);
+                startActivityForResult(intent, 200);
                 remoteMediaClient.removeListener(this);
-                if(playerControl.isPlaying()){
+                if (playerControl.isPlaying()) {
                     playerControl.pause();
                 }
             }
@@ -237,18 +246,25 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
             @Override
             public void onSendingRemoteMediaRequest() {
             }
+
+            @Override
+            public void onAdBreakStatusUpdated() {
+            }
         });
         remoteMediaClient.load(buildMediaInfo(), autoPlay, position);
     }
+
+    @SuppressLint("DefaultLocale")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // check if the request code is same as what is passed  here it is 2
-        if(requestCode==200){
-            int currTime = data.getIntExtra("currTime",0);
+        if (requestCode == 200) {
+            int currTime = data.getIntExtra("currTime", 0);
             player.seekTo(currTime);
         }
     }
+
     {
         updatePlayer = new Runnable() {
             @Override
@@ -273,18 +289,16 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
                         break;
                 }
 
-                String totDur = String.format("%02d.%02d.%02d",
-                        TimeUnit.MILLISECONDS.toHours(player.getDuration()),
-                        TimeUnit.MILLISECONDS.toMinutes(player.getDuration()) -
-                                TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(player.getDuration())), // The change is in this line
-                        TimeUnit.MILLISECONDS.toSeconds(player.getDuration()) -
-                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(player.getDuration())));
-                String curDur = String.format("%02d.%02d.%02d",
-                        TimeUnit.MILLISECONDS.toHours(player.getCurrentPosition()),
-                        TimeUnit.MILLISECONDS.toMinutes(player.getCurrentPosition()) -
-                                TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(player.getCurrentPosition())), // The change is in this line
-                        TimeUnit.MILLISECONDS.toSeconds(player.getCurrentPosition()) -
-                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(player.getCurrentPosition())));
+                String totDur = String.format(
+                        "%02d.%02d.%02d", TimeUnit.MILLISECONDS.toHours(player.getDuration()),
+                        TimeUnit.MILLISECONDS.toMinutes(player.getDuration()) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(player.getDuration())), // The change is in this line
+                        TimeUnit.MILLISECONDS.toSeconds(player.getDuration()) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(player.getDuration()))
+                );
+                String curDur = String.format(
+                        "%02d.%02d.%02d", TimeUnit.MILLISECONDS.toHours(player.getCurrentPosition()),
+                        TimeUnit.MILLISECONDS.toMinutes(player.getCurrentPosition()) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(player.getCurrentPosition())), // The change is in this line
+                        TimeUnit.MILLISECONDS.toSeconds(player.getCurrentPosition()) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(player.getCurrentPosition()))
+                );
                 txt_ct.setText(curDur);
                 txt_td.setText(totDur);
                 seekBar.setMax((int) player.getDuration());
@@ -294,44 +308,43 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
             }
         };
     }
+
     {
-        hideControls = new Runnable() {
-            @Override
-            public void run() {
-                hideAllControls();
-            }
-        };
+        hideControls = () -> hideAllControls();
     }
-    private void hideAllControls(){
-        if(controlsState==ControlsMode.FULLCONTORLS){
-            if(root.getVisibility()==View.VISIBLE){
+
+    private void hideAllControls() {
+        if (controlsState == ControlsMode.FULLCONTORLS) {
+            if (root.getVisibility() == View.VISIBLE) {
                 root.setVisibility(View.GONE);
             }
-        }else if(controlsState==ControlsMode.LOCK){
-            if(unlock_panel.getVisibility()==View.VISIBLE){
+        } else if (controlsState == ControlsMode.LOCK) {
+            if (unlock_panel.getVisibility() == View.VISIBLE) {
                 unlock_panel.setVisibility(View.GONE);
             }
         }
         decorView.setSystemUiVisibility(uiImmersiveOptions);
     }
-    private void showControls(){
-        if(controlsState==ControlsMode.FULLCONTORLS){
-            if(root.getVisibility()==View.GONE){
+
+    private void showControls() {
+        if (controlsState == ControlsMode.FULLCONTORLS) {
+            if (root.getVisibility() == View.GONE) {
                 root.setVisibility(View.VISIBLE);
             }
-        }else if(controlsState==ControlsMode.LOCK){
-            if(unlock_panel.getVisibility()==View.GONE){
+        } else if (controlsState == ControlsMode.LOCK) {
+            if (unlock_panel.getVisibility() == View.GONE) {
                 unlock_panel.setVisibility(View.VISIBLE);
             }
         }
         mainHandler.removeCallbacks(hideControls);
         mainHandler.postDelayed(hideControls, 3000);
     }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()){
+        switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                tested_ok=false;
+                tested_ok = false;
                 if (event.getX() < (sWidth / 2)) {
                     intLeft = true;
                     intRight = false;
@@ -365,8 +378,8 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
                 baseY = event.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
-                screen_swipe_move=true;
-                if(controlsState==ControlsMode.FULLCONTORLS){
+                screen_swipe_move = true;
+                if (controlsState == ControlsMode.FULLCONTORLS) {
                     root.setVisibility(View.GONE);
                     diffX = (long) (Math.ceil(event.getX() - baseX));
                     diffY = (long) Math.ceil(event.getY() - baseY);
@@ -375,67 +388,32 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
                         tested_ok = true;
                     }
                     if (Math.abs(diffY) > Math.abs(diffX)) {
-                        if (intLeft) {
-                            cResolver = getContentResolver();
-                            window = getWindow();
-                            try {
-                                Settings.System.putInt(cResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
-                                brightness = Settings.System.getInt(cResolver, Settings.System.SCREEN_BRIGHTNESS);
-                            } catch (Settings.SettingNotFoundException e) {
-                                e.printStackTrace();
-                            }
-                            int new_brightness = (int) (brightness - (diffY * brightnessSpeed));
-                            if (new_brightness > 250) {
-                                new_brightness = 250;
-                            } else if (new_brightness < 1) {
-                                new_brightness = 1;
-                            }
-                            double brightPerc = Math.ceil((((double) new_brightness / (double) 250) * (double) 100));
-                            brightnessBarContainer.setVisibility(View.VISIBLE);
-                            brightness_center_text.setVisibility(View.VISIBLE);
-                            brightnessBar.setProgress((int) brightPerc);
-                            if (brightPerc < 30) {
-                                brightnessIcon.setImageResource(R.drawable.hplib_brightness_minimum);
-                                brightness_image.setImageResource(R.drawable.hplib_brightness_minimum);
-                            } else if (brightPerc > 30 && brightPerc < 80) {
-                                brightnessIcon.setImageResource(R.drawable.hplib_brightness_medium);
-                                brightness_image.setImageResource(R.drawable.hplib_brightness_medium);
-                            } else if (brightPerc > 80) {
-                                brightnessIcon.setImageResource(R.drawable.hplib_brightness_maximum);
-                                brightness_image.setImageResource(R.drawable.hplib_brightness_maximum);
-                            }
-                            brigtness_perc_center_text.setText(" " + (int) brightPerc);
-                            Settings.System.putInt(cResolver, Settings.System.SCREEN_BRIGHTNESS, (new_brightness));
-                            WindowManager.LayoutParams layoutpars = window.getAttributes();
-                            layoutpars.screenBrightness = brightness / (float) 255;
-                            window.setAttributes(layoutpars);
-                        }else if (intRight) {
-                            vol_center_text.setVisibility(View.VISIBLE);
-                            mediavolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                            int maxVol = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-                            double cal = (double) diffY * ((double)maxVol/(double)(device_height*4));
-                            int newMediaVolume = mediavolume - (int) cal;
-                            if (newMediaVolume > maxVol) {
-                                newMediaVolume = maxVol;
-                            } else if (newMediaVolume < 1) {
-                                newMediaVolume = 0;
-                            }
-                            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, newMediaVolume, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
-                            double volPerc = Math.ceil((((double) newMediaVolume / (double) maxVol) * (double) 100));
-                            vol_perc_center_text.setText(" " + (int) volPerc);
-                            if (volPerc < 1) {
-                                volIcon.setImageResource(R.drawable.hplib_volume_mute);
-                                vol_image.setImageResource(R.drawable.hplib_volume_mute);
-                                vol_perc_center_text.setVisibility(View.GONE);
-                            } else if (volPerc >= 1) {
-                                volIcon.setImageResource(R.drawable.hplib_volume);
-                                vol_image.setImageResource(R.drawable.hplib_volume);
-                                vol_perc_center_text.setVisibility(View.VISIBLE);
-                            }
-                            volumeBarContainer.setVisibility(View.VISIBLE);
-                            volumeBar.setProgress((int) volPerc);
+
+                        vol_center_text.setVisibility(View.VISIBLE);
+                        mediavolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                        int maxVol = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+                        double cal = (double) diffY * ((double) maxVol / (double) (device_height * 4));
+                        int newMediaVolume = mediavolume - (int) cal;
+                        if (newMediaVolume > maxVol) {
+                            newMediaVolume = maxVol;
+                        } else if (newMediaVolume < 1) {
+                            newMediaVolume = 0;
                         }
-                    }else if (Math.abs(diffX) > Math.abs(diffY)) {
+                        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, newMediaVolume, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+                        double volPerc = Math.ceil((((double) newMediaVolume / (double) maxVol) * (double) 100));
+                        vol_perc_center_text.setText(" " + (int) volPerc);
+                        if (volPerc < 1) {
+                            volIcon.setImageResource(R.drawable.hplib_volume_mute);
+                            vol_image.setImageResource(R.drawable.hplib_volume_mute);
+                            vol_perc_center_text.setVisibility(View.GONE);
+                        } else if (volPerc >= 1) {
+                            volIcon.setImageResource(R.drawable.hplib_volume);
+                            vol_image.setImageResource(R.drawable.hplib_volume);
+                            vol_perc_center_text.setVisibility(View.VISIBLE);
+                        }
+                        volumeBarContainer.setVisibility(View.VISIBLE);
+                        volumeBar.setProgress((int) volPerc);
+                    } else if (Math.abs(diffX) > Math.abs(diffY)) {
                         if (Math.abs(diffX) > (MIN_DISTANCE + 100)) {
                             tested_ok = true;
                             root.setVisibility(View.VISIBLE);
@@ -472,7 +450,7 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
                 break;
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
-                screen_swipe_move=false;
+                screen_swipe_move = false;
                 tested_ok = false;
 
                 seekBar_center_text.setVisibility(View.GONE);
@@ -492,6 +470,7 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
         }
         return super.onTouchEvent(event);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mSessionManager = CastContext.getSharedInstance(this).getSessionManager();
@@ -512,7 +491,7 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
 
 
         //Chromecast
-        LinearLayout cast_container = (LinearLayout) findViewById(R.id.cast_container);
+        LinearLayout cast_container = findViewById(R.id.cast_container);
         mMediaRouteButton = new MediaRouteButton(this);
         cast_container.addView(mMediaRouteButton);
         CastButtonFactory.setUpMediaRouteButton(getApplicationContext(), mMediaRouteButton);
@@ -531,10 +510,10 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
         decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(uiImmersiveOptions);
 
-        loadingPanel = (RelativeLayout) findViewById(R.id.loadingVPanel);
-        txt_ct = (TextView) findViewById(R.id.txt_currentTime);
-        txt_td = (TextView) findViewById(R.id.txt_totalDuration);
-        seekBar = (SeekBar) findViewById(R.id.seekbar);
+        loadingPanel = findViewById(R.id.loadingVPanel);
+        txt_ct = findViewById(R.id.txt_currentTime);
+        txt_td = findViewById(R.id.txt_totalDuration);
+        seekBar = findViewById(R.id.seekbar);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -553,39 +532,38 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
         });
 
 
-        btn_back = (ImageButton) findViewById(R.id.btn_back);
-        btn_play = (ImageButton) findViewById(R.id.btn_play);
-        btn_pause = (ImageButton) findViewById(R.id.btn_pause);
-        btn_fwd = (ImageButton) findViewById(R.id.btn_fwd);
-        btn_rev = (ImageButton) findViewById(R.id.btn_rev);
-        btn_prev = (ImageButton) findViewById(R.id.btn_prev);
-        btn_next = (ImageButton) findViewById(R.id.btn_next);
-        btn_lock = (ImageButton) findViewById(R.id.btn_lock);
-        btn_unlock = (ImageButton) findViewById(R.id.btn_unlock);
-        btn_settings = (ImageButton) findViewById(R.id.btn_settings);
+        btn_back = findViewById(R.id.btn_back);
+        btn_play = findViewById(R.id.btn_play);
+        btn_pause = findViewById(R.id.btn_pause);
+        btn_fwd = findViewById(R.id.btn_fwd);
+        btn_rev = findViewById(R.id.btn_rev);
+        btn_prev = findViewById(R.id.btn_prev);
+        btn_next = findViewById(R.id.btn_next);
+        btn_lock = findViewById(R.id.btn_lock);
+        btn_unlock = findViewById(R.id.btn_unlock);
+        btn_settings = findViewById(R.id.btn_settings);
 
 
+        txt_seek_secs = findViewById(R.id.txt_seek_secs);
+        txt_seek_currTime = findViewById(R.id.txt_seek_currTime);
+        seekBar_center_text = findViewById(R.id.seekbar_center_text);
+        onlySeekbar = findViewById(R.id.seekbar_time);
+        top_controls = findViewById(R.id.top);
+        bottom_controls = findViewById(R.id.controls);
 
-        txt_seek_secs = (TextView) findViewById(R.id.txt_seek_secs);
-        txt_seek_currTime = (TextView) findViewById(R.id.txt_seek_currTime);
-        seekBar_center_text = (LinearLayout) findViewById(R.id.seekbar_center_text);
-        onlySeekbar = (LinearLayout) findViewById(R.id.seekbar_time);
-        top_controls = (LinearLayout) findViewById(R.id.top);
-        bottom_controls = (LinearLayout) findViewById(R.id.controls);
+        vol_perc_center_text = findViewById(R.id.vol_perc_center_text);
+        brigtness_perc_center_text = findViewById(R.id.brigtness_perc_center_text);
+        volumeBar = findViewById(R.id.volume_slider);
+        brightnessBar = findViewById(R.id.brightness_slider);
+        volumeBarContainer = findViewById(R.id.volume_slider_container);
+        brightnessBarContainer = findViewById(R.id.brightness_slider_container);
+        brightness_center_text = findViewById(R.id.brightness_center_text);
+        vol_center_text = findViewById(R.id.vol_center_text);
 
-        vol_perc_center_text = (TextView) findViewById(R.id.vol_perc_center_text);
-        brigtness_perc_center_text = (TextView) findViewById(R.id.brigtness_perc_center_text);
-        volumeBar = (ProgressBar) findViewById(R.id.volume_slider);
-        brightnessBar = (ProgressBar) findViewById(R.id.brightness_slider);
-        volumeBarContainer = (LinearLayout) findViewById(R.id.volume_slider_container);
-        brightnessBarContainer = (LinearLayout) findViewById(R.id.brightness_slider_container);
-        brightness_center_text = (LinearLayout) findViewById(R.id.brightness_center_text);
-        vol_center_text = (LinearLayout) findViewById(R.id.vol_center_text);
-
-        volIcon = (ImageView) findViewById(R.id.volIcon);
-        brightnessIcon = (ImageView) findViewById(R.id.brightnessIcon);
-        vol_image = (ImageView) findViewById(R.id.vol_image);
-        brightness_image = (ImageView) findViewById(R.id.brightness_image);
+        volIcon = findViewById(R.id.volIcon);
+        brightnessIcon = findViewById(R.id.brightnessIcon);
+        vol_image = findViewById(R.id.vol_image);
+        brightness_image = findViewById(R.id.brightness_image);
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
 
@@ -601,116 +579,128 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
         btn_unlock.setOnClickListener(this);
         btn_settings.setOnClickListener(this);
 
-        unlock_panel = (LinearLayout) findViewById(R.id.unlock_panel);
+        unlock_panel = findViewById(R.id.unlock_panel);
 
 
+        txt_title = findViewById(R.id.txt_title);
 
-        txt_title = (TextView) findViewById(R.id.txt_title);
 
-
-        root = (LinearLayout) findViewById(R.id.root);
+        root = findViewById(R.id.root);
         root.setVisibility(View.VISIBLE);
 
-        surface = (SurfaceView) findViewById(R.id.surface_view);
+        surface = findViewById(R.id.surface_view);
 
-        currentTrackIndex=0;
+        currentTrackIndex = 0;
 
         video_type = new String[]{"hls", "others"};
-        video_url = new String[]{"http://playertest.longtailvideo.com/adaptive/bbbfull/bbbfull.m3u8","http://player.hungama.com/mp3/91508493.mp4"};
-        video_title = new String[]{"Big Buck Bunny","Movie Trailer"};
+        video_url = new String[]{
+                "http://playertest.longtailvideo.com/adaptive/bbbfull/bbbfull.m3u8",
+                "http://player.hungama.com/mp3/91508493.mp4"
+        };
+        video_title = new String[]{"Big Buck Bunny", "Movie Trailer"};
 
         txt_title.setText(video_title[currentTrackIndex]);
-        
+
         mainHandler = new Handler();
+    }
 
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
         execute();
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        killPlayer();
+    }
+
     @Override
     public void onClick(View v) {
-        int i1 = v.getId();
-        if (i1 == R.id.btn_back) {
-            killPlayer();
-            finish();
-        }
-        if (i1 == R.id.btn_pause) {
-            if (playerControl.isPlaying()) {
-                playerControl.pause();
-                btn_pause.setVisibility(View.GONE);
-                btn_play.setVisibility(View.VISIBLE);
+        try {
+            int i1 = v.getId();
+            if (i1 == R.id.btn_back) {
+                killPlayer();
+                finish();
             }
-        }
-        if (i1 == R.id.btn_play) {
-            if (!playerControl.isPlaying()) {
-                playerControl.start();
-                btn_pause.setVisibility(View.VISIBLE);
-                btn_play.setVisibility(View.GONE);
+            if (i1 == R.id.btn_pause) {
+                if (playerControl.isPlaying()) {
+                    playerControl.pause();
+                    btn_pause.setVisibility(View.GONE);
+                    btn_play.setVisibility(View.VISIBLE);
+                }
             }
-        }
-        if (i1 == R.id.btn_fwd) {
-            player.seekTo(player.getCurrentPosition() + 30000);
-        }
-        if (i1 == R.id.btn_rev) {
-            player.seekTo(player.getCurrentPosition() - 30000);
-        }
-        if (i1 == R.id.btn_next) {
-            player.release();
-            currentTrackIndex++;
-            execute();
-        }
-        if (i1 == R.id.btn_prev) {
-            player.release();
-            currentTrackIndex--;
-            execute();
-        }
-        if (i1 == R.id.btn_lock) {
-            controlsState = ControlsMode.LOCK;
-            root.setVisibility(View.GONE);
-            unlock_panel.setVisibility(View.VISIBLE);
-        }
-        if (i1 == R.id.btn_unlock) {
-            controlsState = ControlsMode.FULLCONTORLS;
-            root.setVisibility(View.VISIBLE);
-            unlock_panel.setVisibility(View.GONE);
-        }
-        if (i1 == R.id.btn_settings) {
-            PopupMenu popup = new PopupMenu(VideoPlayer.this, v);
-            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
+            if (i1 == R.id.btn_play) {
+                if (!playerControl.isPlaying()) {
+                    playerControl.start();
+                    btn_pause.setVisibility(View.VISIBLE);
+                    btn_play.setVisibility(View.GONE);
+                }
+            }
+            if (i1 == R.id.btn_fwd) {
+                player.seekTo(player.getCurrentPosition() + 30000);
+            }
+            if (i1 == R.id.btn_rev) {
+                player.seekTo(player.getCurrentPosition() - 30000);
+            }
+            if (i1 == R.id.btn_next) {
+                player.release();
+                currentTrackIndex++;
+                execute();
+            }
+            if (i1 == R.id.btn_prev) {
+                player.release();
+                currentTrackIndex--;
+                execute();
+            }
+            if (i1 == R.id.btn_lock) {
+                controlsState = ControlsMode.LOCK;
+                root.setVisibility(View.GONE);
+                unlock_panel.setVisibility(View.VISIBLE);
+            }
+            if (i1 == R.id.btn_unlock) {
+                controlsState = ControlsMode.FULLCONTORLS;
+                root.setVisibility(View.VISIBLE);
+                unlock_panel.setVisibility(View.GONE);
+            }
+            if (i1 == R.id.btn_settings) {
+                PopupMenu popup = new PopupMenu(VideoPlayer.this, v);
+                popup.setOnMenuItemClickListener(item -> {
                     player.setSelectedTrack(0, (item.getItemId() - 1));
                     return false;
-                }
-            });
-            Menu menu = popup.getMenu();
-            menu.add(Menu.NONE, 0, 0, "Video Quality");
-            for (int i = 0; i < player.getTrackCount(0); i++) {
-                MediaFormat format = player.getTrackFormat(0, i);
-                if (MimeTypes.isVideo(format.mimeType)) {
-                    if (format.adaptive) {
-                        menu.add(1, (i + 1), (i + 1), "Auto");
-                    } else {
-                        menu.add(1, (i + 1), (i + 1), format.width + "p");
+                });
+                Menu menu = popup.getMenu();
+                menu.add(Menu.NONE, 0, 0, "Video Quality");
+                for (int i = 0; i < player.getTrackCount(0); i++) {
+                    MediaFormat format = player.getTrackFormat(0, i);
+                    if (MimeTypes.isVideo(format.mimeType)) {
+                        if (format.adaptive) {
+                            menu.add(1, (i + 1), (i + 1), "Auto");
+                        } else {
+                            menu.add(1, (i + 1), (i + 1), format.width + "p");
+                        }
                     }
                 }
+                menu.setGroupCheckable(1, true, true);
+                menu.findItem((player.getSelectedTrack(0) + 1)).setChecked(true);
+                popup.show();
             }
-            menu.setGroupCheckable(1, true, true);
-            menu.findItem((player.getSelectedTrack(0) + 1)).setChecked(true);
-            popup.show();
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
         }
     }
 
     private void execute() {
-        player=ExoPlayer.Factory.newInstance(RENDERER_COUNT);
+        player = ExoPlayer.Factory.newInstance(RENDERER_COUNT);
         playerControl = new PlayerControl(player);
-        if(currentTrackIndex>=video_title.length){
-            currentTrackIndex=(video_title.length-1);
-        }else if(currentTrackIndex<=0){
-            currentTrackIndex=0;
+        if (currentTrackIndex >= video_title.length) {
+            currentTrackIndex = (video_title.length - 1);
+        } else if (currentTrackIndex <= 0) {
+            currentTrackIndex = 0;
         }
         txt_title.setText(video_title[currentTrackIndex]);
-        if(player!=null) {
+        if (player != null) {
             hpLibRendererBuilder = getHpLibRendererBuilder();
             hpLibRendererBuilder.buildRenderers(this);
             loadingPanel.setVisibility(View.VISIBLE);
@@ -722,11 +712,11 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
 
     private HpLib_RendererBuilder getHpLibRendererBuilder() {
         String userAgent = Util.getUserAgent(this, "HpLib");
-        switch (video_type[currentTrackIndex]){
+        switch (video_type[currentTrackIndex]) {
             case "hls":
                 return new HpLib_HlsHpLibRendererBuilder(this, userAgent, video_url[currentTrackIndex]);
             case "others":
-                return new HpLib_ExtractorHpLibRendererBuilder(this,userAgent, Uri.parse(video_url[currentTrackIndex]));
+                return new HpLib_ExtractorHpLibRendererBuilder(this, userAgent, Uri.parse(video_url[currentTrackIndex]));
             default:
                 throw new IllegalStateException("Unsupported type: " + video_url[currentTrackIndex]);
         }
@@ -753,7 +743,9 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
     }
 
     private void pushSurface(boolean blockForSurfacePush) {
-        if (videoRenderer == null) {return;}
+        if (videoRenderer == null) {
+            return;
+        }
         if (blockForSurfacePush) {
             player.blockingSendMessage(
                     videoRenderer, MediaCodecVideoTrackRenderer.MSG_SET_SURFACE, surface.getHolder().getSurface());
@@ -763,7 +755,7 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
         }
     }
 
-    private void killPlayer(){
+    private void killPlayer() {
         if (player != null) {
             player.release();
         }
@@ -777,12 +769,14 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
 
     @Override
     public void onLoadStarted(int sourceId, long length, int type, int trigger, Format format, long mediaStartTimeMs, long mediaEndTimeMs) {
-
+        String debugString = "format: " + formatToString(format) + " sourceId: " + sourceId + " length: " + length + " type: " + type +  " start: " + mediaStartTimeMs + "endTime: " + mediaEndTimeMs;
+        Log.d(TAG, "onLoadStarted-" + debugString);
     }
+
 
     @Override
     public void onLoadCompleted(int sourceId, long bytesLoaded, int type, int trigger, Format format, long mediaStartTimeMs, long mediaEndTimeMs, long elapsedRealtimeMs, long loadDurationMs) {
-
+        Log.d(TAG, "onLoadCompleted");
     }
 
     @Override
@@ -792,17 +786,37 @@ public class VideoPlayer extends AppCompatActivity implements HlsSampleSource.Ev
 
     @Override
     public void onLoadError(int sourceId, IOException e) {
-
+        Log.d(TAG, "onUpstreamDiscarded: " + e.getMessage());
     }
 
     @Override
     public void onUpstreamDiscarded(int sourceId, long mediaStartTimeMs, long mediaEndTimeMs) {
-
+        Log.d(TAG, "onUpstreamDiscarded");
     }
 
     @Override
     public void onDownstreamFormatChanged(int sourceId, Format format, int trigger, long mediaTimeMs) {
-
+        Log.d(TAG, "onDownstreamFormatChanged: " + formatToString(format));
     }
+
+    // Debug info
+    private String formatToString(Format format) {
+        if (format == null) return null;
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("{id:" + format.id);
+        stringBuilder.append(" mimeType:" + format.mimeType);
+        stringBuilder.append(" bitrate:" + format.bitrate);
+        stringBuilder.append(" size:" + format.width + "x" + format.height);
+        stringBuilder.append(" frameRate:" + format.frameRate);
+        stringBuilder.append(" audioChannels:" + format.audioChannels);
+        stringBuilder.append(" audioSamplingRate:" + format.audioSamplingRate);
+        stringBuilder.append(" codecs:" + format.codecs);
+        stringBuilder.append(" language:" + format.language);
+        stringBuilder.append("}");
+        return stringBuilder.toString();
+    }
+
+
 }
 
