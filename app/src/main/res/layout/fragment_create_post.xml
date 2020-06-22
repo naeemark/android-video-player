@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+    <ScrollView
+            android:id="@+id/myScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="95dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clRootLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TextView
+                    android:id="@+id/tv_add_media"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_24"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@string/add_media"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/sp_14"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                    android:id="@+id/tv_formats_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_24"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@string/text_file_format"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/sp_12"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_add_media" />
+
+            <TextView
+                    android:id="@+id/tv_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp_24"
+                    android:alpha=".4"
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:fontFamily="sans-serif-condensed"
+                    android:paddingLeft="@dimen/dp_50"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:text="@string/edit_post"
+                    android:textColor="@color/edit_overlay_color"
+                    android:textSize="@dimen/sp_12"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_add_media" />
+
+            <RelativeLayout
+                    android:id="@+id/rl_media_controls"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_12"
+                    android:layout_marginRight="@dimen/dp_24"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_formats_txt">
+
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_media"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                <ImageButton
+                        android:id="@+id/ib_add_media"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/rv_media"
+                        android:background="@drawable/square_gray"
+                        android:padding="@dimen/dp_16"
+                        android:src="@drawable/plus_icon"
+                        app:layout_constraintLeft_toRightOf="@+id/rv_media" />
+            </RelativeLayout>
+
+            <TextView
+                    android:id="@+id/tv_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_24"
+                    android:layout_marginTop="29dp"
+                    android:alpha="0.4"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Add Caption"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/sp_14"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rl_media_controls" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etComment"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="@dimen/dp_24"
+                    android:layout_marginTop="12dp"
+                    android:alpha="0.4"
+                    android:background="@drawable/edittext_saqure"
+                    android:enabled="false"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="start"
+                    android:hint="Please Type..."
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:padding="15dp"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_comment" />
+
+            <View
+                    android:id="@+id/comment_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/dp_24"
+                    android:layout_marginRight="@dimen/dp_24"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/colorPrimaryDark"
+                    app:layout_constraintStart_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/etComment" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/actionLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_24"
+                    android:layout_marginTop="29dp"
+                    android:layout_marginRight="@dimen/dp_24"
+                    app:layout_constraintTop_toBottomOf="@+id/comment_line">
+
+                <TextView
+                        android:id="@+id/tv_privacy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.4"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="@string/who_see_post"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/sp_14"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                <RadioGroup
+                        android:id="@+id/rg_privacy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_13"
+                        android:alpha="0.4"
+                        android:orientation="horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_privacy">
+
+                    <RadioButton
+                            android:id="@+id/rb_everyone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:enabled="false"
+                            android:fontFamily="sans-serif-condensed"
+
+                            android:text="@string/everyone"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/sp_14" />
+
+                    <RadioButton
+                            android:id="@+id/rb_followers"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:enabled="false"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="@string/only_followers"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/sp_14" />
+                </RadioGroup>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--     layout="@layout/users_list"-->
+<!--            <include-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:visibility="gone"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/comment_line" />-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/buttonsCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/bottom_shadow"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+                android:id="@+id/ll_action"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_24"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+            <Button
+                    android:id="@+id/btn_preview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp_8"
+                    android:layout_weight="1"
+                    android:alpha=".4"
+                    android:background="@drawable/preview_post_bg"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Preview"
+                    android:textColor="@color/edit_overlay_color"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold" />
+
+            <Button
+                    android:id="@+id/btn_share_post"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:layout_weight="1"
+                    android:alpha=".4"
+                    android:background="@drawable/share_post_bg"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Share Post"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toRightOf="parent" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias=".5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

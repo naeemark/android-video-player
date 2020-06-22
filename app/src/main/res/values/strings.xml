@@ -1,3 +1,30 @@
 <resources>
 <string name="app_name">Video Player</string>
+    <string name="edit_post">EDIT</string>
+    <string name="cancel">Cancel</string>
+    <string name="uploadingAttachmentText">Uploading attachment</string>
+    <string name="text_file_format_value">Supported file formats: JPG, PNG, GIF, MOV, MP4 \nMaximum video length is %d seconds.</string>
+    <string name="only_followers">Only my followers</string>
+    <string name="everyone">Everyone</string>
+    <string name="who_see_post">WHO SHOULD SEE THIS POST?</string>
+    <string name="group_feed">This Group\'s Feed</string>
+    <string name="group_home_feed">Group + Home Feed</string>
+    <string name="who_see_group">WHERE SHOULD THIS POST BE DISPLAYED?</string>
+    <string name="tips_permission_request_title">Insufficient Permission</string>
+    <string name="tips_permission_request_content">The Ballogy app needs permission to perform this activity. Please try
+        again and grant access when prompted.
+    </string>
+    <string name="go_and_grant_permission">Go to settings and grant permission</string>
+    <string name="deny_and_quit">OK</string>
+    <string name="something_went_wrong">Something went wrong!</string>
+    <string name="drag_and_or_resize_your_photo">Drag and/or resize your photo to fill the square as desired.</string>
+    <string name="drag_and_or_resize_your_video">Drag and/or resize your video to fill the square as desired.</string>
+    <string name="trimming">Trimming…</string>
+    <string name="compressing">Compressing…</string>
+    <string name="add_media">ADD MEDIA</string>
+    <string name="media_label">MEDIA</string>
+    <string name="text_file_format">Supported file formats: JPG, PNG, GIF, MOV, MP4 \nMaximum video length is 60 seconds.</string>
+    <string name="postUploadingText">Your post is uploading…</string>
+    <string name="keepScreenOpenText">You must keep this screen open until your upload has completed!</string>
+    <string name="create_post">Create post</string>
 </resources>

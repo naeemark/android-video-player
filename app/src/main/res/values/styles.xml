@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -8,7 +8,6 @@
         <item name="android:popupMenuStyle">@style/MyPopupMenu</item>
         <item name="android:itemTextAppearance">@style/AndroidSRC.TextAppearance</item>
         <item name="android:actionMenuTextColor">@color/white_light</item>
-        <item name="android:colorBackground">@color/background_holo_light</item>
     </style>
 
     <style name="MyPopupMenu" parent="android:style/Widget.Holo.Light.ListPopupWindow">

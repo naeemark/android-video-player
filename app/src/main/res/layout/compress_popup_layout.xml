@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:padding="24dp"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/compressing"
+            android:textSize="@dimen/sp_16"
+            android:fontFamily="sans-serif-condensed"
+            android:textAllCaps="false"
+            android:textColor="@color/light_black_color"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/uploadingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_18"
+            android:layout_marginTop="@dimen/dp_4"
+            android:textStyle="bold"
+            android:text="0 %"
+            android:fontFamily="sans-serif-condensed"
+            android:textAllCaps="false"
+            android:layout_below="@+id/tvTitle"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/light_black_color"/>
+
+    <ProgressBar
+            android:id="@+id/progressPostUploading"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_16"
+            android:indeterminate="false"
+            android:layout_below="@+id/tvTitle"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="@dimen/dp_8"
+            android:layout_toStartOf="@+id/uploadingText"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progress="0"
+            android:progressDrawable="@drawable/progress_post_uploading"/>
+
+</RelativeLayout>

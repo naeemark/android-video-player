@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true">
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/mainLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <RelativeLayout
+                    android:id="@+id/fl_media"
+                    android:layout_width="match_parent"
+                    android:layout_height="375dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                <com.andromeda.kunalbhatia.demo.hungamaplayer.cropping.ImageCropView
+                        xmlns:imagecrop="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/imageCropper"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="visible"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                <com.video.trimmer.view.VideoCropper
+                        xmlns:imagecrop="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/videoCropper"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        imagecrop:gridInnerColor="#66ffffff"
+                        imagecrop:gridInnerStroke="1dp"
+                        imagecrop:gridOuterColor="#ffffff"
+                        imagecrop:gridOuterStroke="1dp"
+                        imagecrop:outsideLayerColor="#99000000"
+                        imagecrop:setInnerGridMode="on"
+                        imagecrop:setOuterGridMode="on" />
+
+                <ImageView
+                        android:id="@+id/ivThumbnail"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+            </RelativeLayout>
+
+            <TextView
+                    android:id="@+id/crop_options"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:autoLink="web"
+                    android:fontFamily="sans-serif-condensed"
+                    android:lineSpacingExtra="2sp"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16"
+                    android:text="Crop Options"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/sp_14"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fl_media" />
+
+            <RadioGroup
+                    android:checkedButton="@id/rb_square"
+                    android:id="@+id/rg_crop_options"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_3"
+                    android:orientation="horizontal"
+                    app:layout_constraintLeft_toLeftOf="@+id/crop_options"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/crop_options">
+
+                <RadioButton
+                        android:id="@+id/rb_square"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="Sqaure"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/sp_14" />
+
+                <RadioButton
+                        android:id="@+id/rb_native"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="Native"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/sp_14" />
+            </RadioGroup>
+
+            <TextView
+                    android:id="@+id/tvCropOptionsDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_3"
+                    android:fontFamily="sans-serif-condensed"
+                    android:lineSpacingExtra="6sp"
+                    android:paddingLeft="@dimen/dp_16"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:paddingRight="@dimen/dp_16"
+                    android:textColor="#212121"
+                    android:textSize="14sp"
+                    android:textStyle="normal"
+                    app:layout_constraintTop_toBottomOf="@+id/rg_crop_options"
+                    android:text="@string/drag_and_or_resize_your_photo" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottomCardView"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_shadow">
+
+        <LinearLayout
+                android:id="@+id/ll_action"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/dp_24"
+                android:orientation="horizontal">
+            <Button
+                    android:id="@+id/btn_reset"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_8"
+                    android:layout_weight="1"
+                    android:alpha=".4"
+                    android:background="@drawable/preview_post_bg"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Reset"
+                    android:textColor="@color/edit_overlay_color"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold" />
+
+            <Button
+                    android:id="@+id/btn_continue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:layout_weight="1"
+                    android:alpha=".4"
+                    android:background="@drawable/share_post_bg"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Continue"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+</RelativeLayout>
+
+

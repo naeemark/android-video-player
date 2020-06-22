@@ -1,5 +1,171 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">0dp</dimen>
-    <dimen name="activity_vertical_margin">0dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+
+
+    <dimen name="width_circle_stroke">2dp</dimen>
+
+    <!-- Preference activity, vertical padding for the header list -->
+    <dimen name="preference_screen_header_vertical_padding_material">8dp</dimen>
+
+    <!-- Preference activity side margins -->
+    <dimen name="preference_screen_side_margin_material">0dp</dimen>
+    <!-- Preference activity side margins negative-->
+    <dimen name="preference_screen_side_margin_negative_material">0dp</dimen>
+
+    <!-- Preference fragment padding, sides -->
+    <dimen name="preference_fragment_padding_side_material">8dp</dimen>
+
+    <!-- Preference breadcrumbs padding, start padding -->
+    <dimen name="preference_breadcrumbs_padding_start_material">12dp</dimen>
+
+    <!-- Preference breadcrumbs padding, end padding -->
+    <dimen name="preference_breadcrumbs_padding_end_material">24dp</dimen>
+
+    <dimen name="preference_screen_header_padding_side_material">0dp</dimen>
+
+    <!-- Default height of an action bar. -->
+    <dimen name="action_bar_default_height_material">56dp</dimen>
+    <!-- Default padding of an action bar. -->
+    <dimen name="action_bar_default_padding_material">4dp</dimen>
+    <!-- Vertical padding around action bar icons. -->
+    <dimen name="action_bar_icon_vertical_padding_material">16dp</dimen>
+    <!-- Top margin for action bar subtitles -->
+    <dimen name="action_bar_subtitle_top_margin_material">-3dp</dimen>
+    <!-- Bottom margin for action bar subtitles -->
+    <dimen name="action_bar_subtitle_bottom_margin_material">5dp</dimen>
+
+    <dimen name="action_button_min_width_overflow_material">36dp</dimen>
+    <dimen name="action_button_min_width_material">48dp</dimen>
+    <dimen name="action_button_min_height_material">48dp</dimen>
+
+    <dimen name="text_size_display_4_material">112sp</dimen>
+    <dimen name="text_size_display_3_material">56sp</dimen>
+    <dimen name="text_size_display_2_material">45sp</dimen>
+    <dimen name="text_size_display_1_material">34sp</dimen>
+    <dimen name="text_size_headline_material">24sp</dimen>
+    <dimen name="text_size_title_material">20sp</dimen>
+    <dimen name="text_size_subhead_material">16sp</dimen>
+    <dimen name="text_size_title_material_toolbar">20dp</dimen>
+    <dimen name="text_size_subtitle_material_toolbar">16dp</dimen>
+    <dimen name="text_size_menu_material">16sp</dimen>
+    <dimen name="text_size_body_2_material">14sp</dimen>
+    <dimen name="text_size_body_1_material">14sp</dimen>
+    <dimen name="text_size_caption_material">12sp</dimen>
+    <dimen name="text_size_button_material">14sp</dimen>
+
+    <dimen name="text_size_large_material">22sp</dimen>
+    <dimen name="text_size_medium_material">18sp</dimen>
+    <dimen name="text_size_small_material">14sp</dimen>
+
+    <dimen name="floating_window_z">16dp</dimen>
+    <dimen name="floating_window_margin_left">16dp</dimen>
+    <dimen name="floating_window_margin_top">8dp</dimen>
+    <dimen name="floating_window_margin_right">16dp</dimen>
+    <dimen name="floating_window_margin_bottom">32dp</dimen>
+
+    <!-- Elevation when button is pressed -->
+    <dimen name="button_elevation_material">1dp</dimen>
+    <!-- Z translation to apply when button is pressed -->
+    <dimen name="button_pressed_z_material">2dp</dimen>
+    <!-- Default insets (outer padding) around buttons -->
+    <dimen name="button_inset_vertical_material">6dp</dimen>
+    <dimen name="button_inset_horizontal_material">@dimen/control_inset_material</dimen>
+    <!-- Default inner padding within buttons -->
+    <dimen name="button_padding_vertical_material">@dimen/control_padding_material</dimen>
+    <dimen name="button_padding_horizontal_material">8dp</dimen>
+
+    <!-- Default insets (outer padding) around controls -->
+    <dimen name="control_inset_material">4dp</dimen>
+    <!-- Default inner padding within controls -->
+    <dimen name="control_padding_material">4dp</dimen>
+    <!-- Default rounded corner for controls -->
+    <dimen name="control_corner_material">20dp</dimen>
+
+    <dimen name="alert_dialog_padding_material">24dp</dimen>
+    <dimen name="alert_dialog_padding_top_material">18dp</dimen>
+
+    <dimen name="dp_24">24dp</dimen>
+    <dimen name="dp_8">8dp</dimen>
+    <dimen name="dp_40">40dp</dimen>
+    <dimen name="dp_16">16dp</dimen>
+    <dimen name="sp_13">13sp</dimen>
+    <dimen name="sp_16">16sp</dimen>
+    <dimen name="sp_14">14sp</dimen>
+    <dimen name="dp_10">10dp</dimen>
+    <dimen name="dp_2">2dp</dimen>
+    <dimen name="dp_48">48dp</dimen>
+    <dimen name="dp_20">20dp</dimen>
+    <dimen name="dp_4">4dp</dimen>
+    <dimen name="sp_6">6sp</dimen>
+    <dimen name="sp_2">2sp</dimen>
+    <dimen name="sp_0">0sp</dimen>
+    <dimen name="sp_12">12sp</dimen>
+    <dimen name="sp_4">4sp</dimen>
+    <dimen name="dp_13">13dp</dimen>
+    <dimen name="dp_6">6dp</dimen>
+    <dimen name="dp_25">25dp</dimen>
+    <dimen name="dp_12">12dp</dimen>
+    <dimen name="dp_11">11dp</dimen>
+    <dimen name="dp_3">3dp</dimen>
+    <dimen name="dp_5">5dp</dimen>
+    <dimen name="dp_88">88dp</dimen>
+    <dimen name="dp_32">32dp</dimen>
+    <dimen name="sp_11">11sp</dimen>
+    <dimen name="sp_20">20sp</dimen>
+    <dimen name="dp_28">28dp</dimen>
+    <dimen name="sp_10">10sp</dimen>
+    <dimen name="sp_24">24sp</dimen>
+    <dimen name="sp_30">30sp</dimen>
+    <dimen name="dp_100">100dp</dimen>
+    <dimen name="dp_21">21dp</dimen>
+    <dimen name="dp_18">18dp</dimen>
+    <dimen name="dp_1">1dp</dimen>
+    <dimen name="dp_17">17dp</dimen>
+    <dimen name="dp_31">31dp</dimen>
+    <dimen name="dp_39">39dp</dimen>
+    <dimen name="dp_0">0dp</dimen>
+    <dimen name="sp_22">22sp</dimen>
+    <dimen name="dp_22">22dp</dimen>
+    <dimen name="dp_80">80dp</dimen>
+    <dimen name="dp_30">30dp</dimen>
+    <dimen name="dp_50">50dp</dimen>
+    <dimen name="sp_7">7sp</dimen>
+    <dimen name="grid_expected_size">120dp</dimen>
+    <dimen name="sp_32">32sp</dimen>
+    <dimen name="dp_26">26dp</dimen>
+    <dimen name="dp_66">66dp</dimen>
+    <dimen name="margin_40dp">40dp</dimen>
+    <dimen name="sp_40">40sp</dimen>
+    <dimen name="dp_70">70dp</dimen>
+    <dimen name="dp_15">15dp</dimen>
+    <dimen name="dp_9">9dp</dimen>
+    <dimen name="dp_14">14dp</dimen>
+    <dimen name="dp_7">7dp</dimen>
+    <dimen name="dp_29">29dp</dimen>
+    <dimen name="dp_44">44dp</dimen>
+    <dimen name="dp_19">19dp</dimen>
+    <dimen name="dp_35">35dp</dimen>
+    <dimen name="sp_18">18sp</dimen>
+    <dimen name="sp_60">60sp</dimen>
+    <dimen name="dp_23">23dp</dimen>
+    <dimen name="dp_52">52dp</dimen>
+    <dimen name="sp_8">8sp</dimen>
+    <dimen name="dp_60">60dp</dimen>
+    <dimen name="dp_43">43dp</dimen>
+    <dimen name="dp_36">36dp</dimen>
+
+
+
+
+
+
+
+    <!-- VIDEO TRIMMER STARTS -->
+    <dimen name="progress_video_line_height">@dimen/dp_2</dimen>
+    <dimen name="frames_video_height">@dimen/dp_10</dimen>
+    <dimen name="text_small">@dimen/sp_10</dimen>
+    <!-- VIDEO TRIMMER ENDS -->
 </resources>
