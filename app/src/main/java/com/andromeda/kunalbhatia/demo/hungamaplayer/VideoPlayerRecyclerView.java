@@ -58,14 +58,14 @@ import java.util.Objects;
 
 public class VideoPlayerRecyclerView extends RecyclerView {
 
-    private static final String TAG = "VideoPlayerRecyclerView";
+    private static final String TAG = VideoPlayerRecyclerView.class.getSimpleName();
 
     public enum VolumeState {ON, OFF};
 
     // ui
     private ProgressBar thumbnail;
     private AppCompatImageView videoThumbnail;
-    private static ImageView volumeControl;
+    private ImageView volumeControl;
     private String myUrl = null;
     private Integer width = null;
     private Integer height = null;
@@ -82,7 +82,7 @@ public class VideoPlayerRecyclerView extends RecyclerView {
     private Context context;
     private int playPosition = -1;
     private boolean isVideoViewAdded;
-    private static RequestManager requestManager;
+    private RequestManager requestManager;
     private long timeMilli = 0;
     private Player.EventListener playerEventListener;
     DataSource.Factory mDataSourceFactory = null;
@@ -102,7 +102,7 @@ public class VideoPlayerRecyclerView extends RecyclerView {
 
     private void init(Context context){
         timeMilli = System.currentTimeMillis();
-        Log.d(TAG, "STEP 1  ");
+        Log.d(TAG, "Step Initialization...");
         this.context = context.getApplicationContext();
         Display display = ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         Point point = new Point();
@@ -175,9 +175,8 @@ public class VideoPlayerRecyclerView extends RecyclerView {
                     }
                 }else{
                     Integer tPos = getPositionToStop();
-                    Log.d(TAG, "getPositionToStop " + tPos);
                     if(tPos != null && tPos != playPosition && videoPlayer != null){
-                        Log.d(TAG, "Stop Player " + tPos);
+                        Log.d(TAG, "Step pause player on scroll...");
                         videoPlayer.setPlayWhenReady(false);
                         videoPlayer.getPlaybackState();
                     }
@@ -199,9 +198,8 @@ public class VideoPlayerRecyclerView extends RecyclerView {
 
             @Override
             public void onChildViewDetachedFromWindow(View view) {
-                Log.d(TAG, "STEP 4  " + (System.currentTimeMillis() - timeMilli));
                 if (viewHolderParent != null && viewHolderParent.equals(view)) {
-                    Log.d(TAG, "onChildViewDetachedFromWindow: ");
+                    Log.d(TAG, "Step child attach with window...");
                     resetVideoView();
                 }
 
@@ -211,25 +209,22 @@ public class VideoPlayerRecyclerView extends RecyclerView {
         playerEventListener = new Player.EventListener() {
             @Override
             public void onTimelineChanged(Timeline timeline, int reason) {
-                Log.d(TAG, "onTimelineChanged: 1 called");
             }
 
             @Override
             public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
-                Log.d(TAG, "onTracksChanged: 1 called");
+                Log.d(TAG, "Step track changes...");
             }
 
             @Override
             public void onLoadingChanged(boolean isLoading) {
-                Log.d(TAG, "onLoadingChanged: 1 called");
+                Log.d(TAG, "Step loading changes...");
             }
 
             @Override
             public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-                Log.d(TAG, "STEP 3  " + (System.currentTimeMillis() - timeMilli));
-                Log.d(TAG, "onPlayerStateChanged Before: 1 called" + " PlaybackState = " + playbackState);
+                Log.d(TAG, "Step player state changes...");
                 if(isShown()){
-                    Log.d(TAG, "onPlayerStateChanged After: 1 called");
                     switch (playbackState) {
                         case Player.STATE_BUFFERING:
                             Log.e(TAG, "onPlayerStateChanged: STATE_BUFFERING.");
@@ -672,7 +667,7 @@ public class VideoPlayerRecyclerView extends RecyclerView {
         }
     }
 
-    private static void animateVolumeControl(){
+    private void animateVolumeControl(){
         if(volumeControl != null){
             volumeControl.bringToFront();
             if(volumeState == VolumeState.OFF){
